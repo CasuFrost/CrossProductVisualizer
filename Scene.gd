@@ -17,7 +17,15 @@ var module=0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-
+func _input(event):
+	if event is InputEventMouseMotion:
+		if Input.is_action_pressed("drag"):
+			$center.rotation_degrees.y-=event.relative.x*0.5
+			#$center.rotation_degrees.x-=event.relative.y
+			#$center.rotation_degrees.z-=event.relative.y
+		
+		
+		
 func _physics_process(delta):
 	if rotateScene:
 		$center.rotation_degrees.y+=rotateSpeed
@@ -145,7 +153,7 @@ func _on_rotate_button_pressed():
 
 
 func _on_reset_rotation_button_down():
-	$center.rotation_degrees.y=0
+	$center.rotation_degrees=Vector3()
 	rotateScene=false
 	$CanvasLayer/rotateButton.text="rotate scene"
 

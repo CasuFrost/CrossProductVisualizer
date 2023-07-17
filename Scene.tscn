@@ -180,6 +180,7 @@ offset_bottom = 190.0
 text = "module"
 
 [node name="rotateButton" type="Button" parent="CanvasLayer"]
+visible = false
 offset_left = 9.0
 offset_top = 204.0
 offset_right = 114.0
@@ -187,10 +188,10 @@ offset_bottom = 235.0
 text = "rotate scene"
 
 [node name="resetRotation" type="Button" parent="CanvasLayer"]
-offset_left = 125.0
-offset_top = 204.0
-offset_right = 240.0
-offset_bottom = 235.0
+offset_left = 21.0
+offset_top = 200.0
+offset_right = 136.0
+offset_bottom = 231.0
 text = "reset rotation"
 
 [node name="zoomIn" type="Button" parent="CanvasLayer"]

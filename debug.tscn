@@ -9,15 +9,15 @@ ambient_light_color = Color(0.721569, 0.764706, 0.776471, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_vkpi5"]
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_2btsv"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_j44h6"]
 _surfaces = [{
-"aabb": AABB(0, 0, 0, 1, 4, 1e-05),
+"aabb": AABB(0, 0, 0, 1, 1, 1e-05),
 "format": 4097,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
 "primitive": 3,
 "vertex_count": 3,
-"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 64, 0, 0, 0, 0)
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0)
 }]
 
 [node name="Node3D" type="Node3D"]
@@ -35,5 +35,5 @@ mesh = SubResource("BoxMesh_vkpi5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.65981, 0)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_2btsv")
+mesh = SubResource("ArrayMesh_j44h6")
 script = ExtResource("1_rig1h")
