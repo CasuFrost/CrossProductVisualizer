@@ -10,12 +10,13 @@ var rotateW : bool= false
 var showArea : bool = false
 var u : Vector3 = Vector3()
 var w : Vector3 = Vector3()
+var vecSum : Vector3 = Vector3()
 var originDrawed : bool = false
 var rotateScene : bool = false
 var rotateSpeed=0.6
 var module=0
 var dim = 8
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	pass
 func _input(event):
@@ -37,7 +38,7 @@ func _physics_process(delta):
 		$center.rotation_degrees.y+=rotateSpeed
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-
+	
 
 	time+=delta
 	if !originDrawed:
@@ -70,17 +71,25 @@ func _process(delta):
 	lines.append(l3)
 	lines.append(point1)
 	
+	if $CanvasLayer/vectorSum.button_pressed and !showArea and vecModule(u)>0 and vecModule(w)>0:
+		var sum=drawer.line(Vector3(),vecSum,Color.BROWN)
+		var sumPoint = drawer.triangle(vecSum,Color.BROWN,true)
+		lines.append(sum)
+		lines.append(sumPoint)
+	
 	
 	showCrossProductArea()
-	module=snapped(sqrt(v.x*v.x/SCALING+v.y*v.y/SCALING+v.z*v.z/SCALING),0.001)
+	#module=snapped(sqrt(v.x*v.x/SCALING+v.y*v.y/SCALING+v.z*v.z/SCALING),0.001)
 	
-	$CanvasLayer/module.text="Module of the cross product : "+str(module)
+	$CanvasLayer/module.text="Module of the cross product : "+str(vecModule(v))
 	
 	
 	if Input.is_action_pressed("MSU"):
 		print("a")
 		zoom_in()
 	
+func vecModule(vec):
+	return snapped(sqrt(vec.x*vec.x/SCALING+vec.y*vec.y/SCALING+vec.z*vec.z/SCALING),0.001)
 func showCrossProductArea():
 	
 	get_node("Area").set_u(u)
@@ -137,7 +146,7 @@ func getValues():
 		w.y=0
 		w.x=cos(time)*SCALING*2
 		w.z=sin(time)*SCALING*2
-		
+	vecSum=u+w
 func crossProdutct(v : Vector3,w: Vector3) -> Vector3:
 	return Vector3(v.y*w.z-v.z*w.y,v.z*w.x-v.x*w.z,v.x*w.y-v.y*w.x)/SCALING
 
