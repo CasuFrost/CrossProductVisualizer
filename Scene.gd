@@ -18,8 +18,9 @@ var module=0
 var dim = 8
 
 func _ready():
-	pass
+	pass#functionConverter.conv("(5-2*(4-x))*2",4)
 func _input(event):
+	
 	if event is InputEventMouseMotion:
 		if Input.is_action_pressed("drag"):
 			$center.rotation_degrees.y-=event.relative.x*0.5
