@@ -1,0 +1,19 @@
+<IfModule mod_headers.c>
+Header set Access-Control-Allow-Origin "*"
+Header set Cross-Origin-Embedder-Policy "require-corp"
+Header set Cross-Origin-Opener-Policy "same-origin"
+</IfModule>
+SetEnvIfNoCase Request_Method OPTIONS noauth
+
+<RequireAny>
+<RequireAll>
+Require env noauth
+Require all granted
+</RequireAll>
+<RequireAll>
+AuthType Basic
+AuthName "Restricted Access"
+AuthUserFile /home/..../.htpasswd
+Require valid-user
+</RequireAll>
+</RequireAny>

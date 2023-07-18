@@ -14,6 +14,7 @@ var originDrawed : bool = false
 var rotateScene : bool = false
 var rotateSpeed=0.6
 var module=0
+var dim = 8
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -21,9 +22,14 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		if Input.is_action_pressed("drag"):
 			$center.rotation_degrees.y-=event.relative.x*0.5
-			#$center.rotation_degrees.x-=event.relative.y
-			#$center.rotation_degrees.z-=event.relative.y
-		
+			
+			$center.rotation_degrees.x+=event.relative.y*0.2
+			$center.rotation_degrees.z-=event.relative.y*0.2
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom_in()
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom_out()
 		
 		
 func _physics_process(delta):
@@ -46,7 +52,7 @@ func _process(delta):
 	var l1=drawer.line(Vector3(),u,Color.CORNSILK)
 	var l2=drawer.line(Vector3(),w,Color.CORNSILK)
 	var l3=drawer.line(Vector3(),v,Color.HOT_PINK)
-	var point1 = drawer.triangle(v,0.005,Color.HOT_PINK,true)
+	var point1 = drawer.triangle(v,Color.HOT_PINK,true)
 	
 	if showArea:
 		var point2 = drawer.point(u,0.01,Color.CORNSILK)
@@ -54,8 +60,8 @@ func _process(delta):
 		lines.append(point2)
 		lines.append(point3)
 	else:
-		var point2 = drawer.triangle(u,0.005,Color.CORNSILK)
-		var point3 = drawer.triangle(w,0.005,Color.CORNSILK)
+		var point2 = drawer.triangle(u,Color.CORNSILK)
+		var point3 = drawer.triangle(w,Color.CORNSILK)
 		lines.append(point2)
 		lines.append(point3)
 		
@@ -66,10 +72,17 @@ func _process(delta):
 	
 	
 	showCrossProductArea()
-	module=sqrt(v.x*v.x/SCALING+v.y*v.y/SCALING+v.z*v.z/SCALING)
+	module=snapped(sqrt(v.x*v.x/SCALING+v.y*v.y/SCALING+v.z*v.z/SCALING),0.001)
 	
 	$CanvasLayer/module.text="Module of the cross product : "+str(module)
+	
+	
+	if Input.is_action_pressed("MSU"):
+		print("a")
+		zoom_in()
+	
 func showCrossProductArea():
+	
 	get_node("Area").set_u(u)
 	get_node("Area").set_v(w)
 	if showArea:
@@ -87,12 +100,21 @@ func clearRedraw():
 	areaLines.clear()
 	
 func drawOrigin():
-	var a = drawer.line(Vector3.ZERO,Vector3(SCALING*8,0,0),Color.RED)
-	var b = drawer.line(Vector3.ZERO,Vector3(0,SCALING*8,0),Color.BLUE)
-	var c = drawer.line(Vector3.ZERO,Vector3(0,0,SCALING*8),Color.GREEN)
+	for i in ogLines:
+		i.queue_free()
+	ogLines.clear()
+	var a = drawer.line(Vector3.ZERO,Vector3(SCALING*dim,0,0),Color.RED)
+	var b = drawer.line(Vector3.ZERO,Vector3(0,SCALING*dim,0),Color.BLUE)
+	var c = drawer.line(Vector3.ZERO,Vector3(0,0,SCALING*dim),Color.GREEN)
+	var p1 = drawer.pir(Vector3(SCALING*dim,0,0),Color.RED)
+	var p2 = drawer.pir(Vector3(0,SCALING*dim,0),Color.BLUE)
+	var p3 = drawer.pir(Vector3(0,0,SCALING*dim),Color.GREEN)
 	ogLines.append(a)
 	ogLines.append(b)
 	ogLines.append(c)
+	ogLines.append(p1)
+	ogLines.append(p2)
+	ogLines.append(p3)
 	
 func getValues():
 	if !rotateU:
@@ -159,10 +181,21 @@ func _on_reset_rotation_button_down():
 
 
 func _on_zoom_in_button_down():
-	if $center/ortCamera.size>1:
-		$center/ortCamera.size-=0.1
+	zoom_in()
 
 
 func _on_zoom_out_button_down():
-	if $center/ortCamera.size<6:
-		$center/ortCamera.size+=0.1
+	zoom_out()
+func zoom_in():
+	if $center/ortCamera.size>0.5:
+		$center/ortCamera.size-=0.3
+		$center/ortCamera.global_position.y-=0.01
+		dim-=0.7
+		drawOrigin()
+func zoom_out():
+	if $center/ortCamera.size<18:
+		$center/ortCamera.size+=0.3
+		$center/ortCamera.global_position.y+=0.01
+		dim+=0.7
+		drawOrigin()
+	

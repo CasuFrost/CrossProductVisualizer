@@ -1,14 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://eoy8eko2gpmi"]
+[gd_scene load_steps=11 format=3 uid="uid://eoy8eko2gpmi"]
 
 [ext_resource type="Script" path="res://Scene.gd" id="1_4j58p"]
 [ext_resource type="Script" path="res://3Drawer.gd" id="1_qky4e"]
 [ext_resource type="ArrayMesh" uid="uid://dam34u2xb3t3l" path="res://cone.obj" id="3_sd46s"]
 [ext_resource type="Script" path="res://CpArea.gd" id="4_21rro"]
+[ext_resource type="ArrayMesh" uid="uid://bkpkf6pobsabd" path="res://pyramid.obj" id="4_u6pqt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ksl1i"]
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_60ngl"]
+
+[sub_resource type="Environment" id="Environment_26epq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ayt7t"]
 shading_mode = 0
@@ -221,6 +224,7 @@ text = "Show CrossProductArea"
 
 [node name="ortCamera" type="Camera3D" parent="center"]
 transform = Transform3D(0.707107, -0.324314, 0.628347, 0, 0.888617, 0.458649, -0.707107, -0.324314, 0.628347, 7.367, 5.521, 7.367)
+environment = SubResource("Environment_26epq")
 projection = 1
 current = true
 size = 3.0
@@ -234,9 +238,18 @@ visible = false
 material_override = SubResource("StandardMaterial3D_ayt7t")
 mesh = ExtResource("3_sd46s")
 
+[node name="pyramid" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.752636, -0.0509675, 0.384376)
+visible = false
+material_override = SubResource("StandardMaterial3D_ayt7t")
+mesh = ExtResource("4_u6pqt")
+
 [node name="Area" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_m1dat")
 script = ExtResource("4_21rro")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.078894, 0.996883, 0, -0.996883, 0.078894, 0, 7.27507, 0)
 
 [connection signal="button_down" from="CanvasLayer/u/rotateU" to="." method="_on_rotate_u_button_down"]
 [connection signal="button_down" from="CanvasLayer/w/rotateW" to="." method="_on_rotate_w_button_down"]
