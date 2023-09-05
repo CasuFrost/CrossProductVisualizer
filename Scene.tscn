@@ -34,6 +34,8 @@ material_override = SubResource("StandardMaterial3D_ksl1i")
 mesh = SubResource("SphereMesh_60ngl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2(1.267, 1.267)
+transform = Transform2D(1.267, 0, 0, 1.267, 0, 0)
 
 [node name="u" type="Label" parent="CanvasLayer"]
 offset_left = 8.787
@@ -157,10 +159,10 @@ anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 0.0195313
 anchor_bottom = 1.00694
-offset_left = 11.0
-offset_top = -42.0
-offset_right = 214.0
-offset_bottom = -16.0
+offset_left = 11.0497
+offset_top = -184.878
+offset_right = 214.05
+offset_bottom = -158.878
 grow_vertical = 0
 text = "Marco Casu"
 metadata/_edit_use_anchors_ = true
@@ -169,10 +171,10 @@ metadata/_edit_use_anchors_ = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -203.0
-offset_top = 13.0
-offset_right = -17.0
-offset_bottom = 39.0
+offset_left = -467.845
+offset_top = 7.10339
+offset_right = -281.845
+offset_bottom = 33.1034
 grow_horizontal = 0
 text = "Cross Product Visualizer"
 
@@ -219,7 +221,7 @@ offset_right = 201.0
 offset_bottom = 333.0
 text = "Show Vector Sum"
 
-[node name="ShowArea" type="Button" parent="."]
+[node name="ShowArea" type="Button" parent="CanvasLayer"]
 offset_left = 49.0
 offset_top = 119.0
 offset_right = 243.0
@@ -270,4 +272,4 @@ script = ExtResource("6_ci8ws")
 [connection signal="button_down" from="CanvasLayer/resetRotation" to="." method="_on_reset_rotation_button_down"]
 [connection signal="button_down" from="CanvasLayer/zoomIn" to="." method="_on_zoom_in_button_down"]
 [connection signal="button_down" from="CanvasLayer/zoomOut" to="." method="_on_zoom_out_button_down"]
-[connection signal="button_down" from="ShowArea" to="." method="_on_show_area_button_down"]
+[connection signal="button_down" from="CanvasLayer/ShowArea" to="." method="_on_show_area_button_down"]
